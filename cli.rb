@@ -24,14 +24,14 @@ class CLI
   def check_if_windows
     if OS.windows?
       puts 'Script does not support Windows.'
-      exit
+      exit 1
     end
   end
 
   def check_if_in_git_repo
     unless GitInfo.currently_in_git_repo?
       puts "Not in a git repository."
-      exit
+      exit 1
     end
   end
 
@@ -39,7 +39,7 @@ class CLI
     if GitInfo.master?
       puts "You're currently in the 'master' branch."
       puts "You can't make a deploy request for this branch."
-      exit
+      exit 1
     end
   end
 
