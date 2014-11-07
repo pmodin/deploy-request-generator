@@ -106,6 +106,7 @@ end
 class CLI
   def self.run
     cli = new(true, false)
+    cli.check_if_windows
     cli.check_if_in_git_repo
     cli.check_if_in_master
     cli.special?
@@ -121,6 +122,13 @@ class CLI
   end
 
   attr_reader :special, :debug
+
+  def check_if_windows
+    if OS.windows?
+      puts 'Script does not support Windows.'
+      exit
+    end
+  end
 
   def check_if_in_git_repo
     unless GitInfo.currently_in_git_repo?
