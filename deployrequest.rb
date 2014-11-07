@@ -146,7 +146,8 @@ class CLI
 
   def open
     mailto_link = "mailto:#{email.to}?subject=#{email.subject}"\
-      "&body=#{email.body.gsub(/\n/, '%0D%0A')}"
+      "&body=#{format_newlines(email.body)}"
+
     `#{command} "#{mailto_link}"`
   end
 
@@ -154,6 +155,14 @@ class CLI
 
   def email
     @email ||= EmailFormatter.new(special)
+  end
+
+  def format_newlines(body)
+    if OS.linux?
+      body.gsub(/\n/, '%0D%0A')
+    else
+      body
+    end
   end
 
   def command
