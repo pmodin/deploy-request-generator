@@ -11,6 +11,10 @@ module GitInfo
       # git rev-parse --git-dir
     end
 
+    def master?
+      branch_name == 'master'
+    end
+
     def branch_name
       @branch_name ||= `git rev-parse --abbrev-ref HEAD`.chomp
     end
@@ -98,6 +102,7 @@ end
 class CLI
   def self.run
     cli = new(true, false)
+    cli.check_if_in_master
     cli.special?
     cli.debug_output
     cli.open_mailto_link
@@ -111,6 +116,14 @@ class CLI
   end
 
   attr_reader :special, :debug
+
+  def check_if_in_master
+    if GitInfo.master?
+      puts "You're currently in the 'master' branch."
+      puts "You can't make a deploy request for this branch."
+      exit
+    end
+  end
 
   def special?
     puts 'Does the deployer need any special instructions? [Y/N]'
