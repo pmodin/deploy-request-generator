@@ -41,7 +41,7 @@ module GitInfo
     def redmine_refs
       merge_base = `git merge-base HEAD master`.chomp
       `git log #{merge_base}..HEAD --format='%b' | grep refs`.
-        gsub('refs #', '').chomp.split(/\s /).uniq.sort_by { |ref| ref.to_i }
+        gsub('refs #', '').chomp.split(/\s+/).uniq.sort_by { |ref| ref.to_i }
     end
   end
 end
