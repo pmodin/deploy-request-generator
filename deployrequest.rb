@@ -138,7 +138,7 @@ class CLI
   end
 
   def special?
-    puts 'Does the deployer need any special instructions? [Y/N]'
+    print 'Does the deployer need any special instructions? [Y/N] '
     loop do
       answer = $stdin.gets.chomp
       case answer.upcase
@@ -149,7 +149,7 @@ class CLI
         @special = false
         break
       else
-        puts 'Please try again... [Y/N]'
+        print 'Please try again... [Y/N] '
       end
     end
   end
