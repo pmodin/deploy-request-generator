@@ -145,7 +145,8 @@ class CLI
   end
 
   def open_mailto_link
-    mailto_link = "mailto:#{email.to}?subject=#{email.subject}"\
+    mailto_link = "mailto:#{email.to}?"\
+      "subject=#{email.subject}"\
       "&body=#{format_newlines(email.body)}"
 
     `#{command} "#{mailto_link}"`
