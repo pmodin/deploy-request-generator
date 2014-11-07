@@ -5,10 +5,14 @@
 
 # Handles the various git-interactions
 module GitInfo
+  require 'open3'
+
   class << self
     def currently_in_git_repo?
-      # TODO: use popen3 to check the exit code of this command:
-      # git rev-parse --git-dir
+      _, _, _, wait_thread = Open3.popen3('git rev-parse --git-dir')
+      exit_code = wait_thread.value.exitstatus
+
+      exit_code == 0
     end
 
     def master?
@@ -102,6 +106,7 @@ end
 class CLI
   def self.run
     cli = new(true, false)
+    cli.check_if_in_git_repo
     cli.check_if_in_master
     cli.special?
     cli.debug_output
@@ -116,6 +121,13 @@ class CLI
   end
 
   attr_reader :special, :debug
+
+  def check_if_in_git_repo
+    unless GitInfo.currently_in_git_repo?
+      puts "Not in a git repository."
+      exit
+    end
+  end
 
   def check_if_in_master
     if GitInfo.master?
