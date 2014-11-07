@@ -9,7 +9,7 @@ class EmailFormatter
   attr_reader :special
 
   def to
-    'Deploy officer <deploy@example.com>'
+    ENV['email_to']
   end
 
   def subject
