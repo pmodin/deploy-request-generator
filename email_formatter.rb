@@ -29,7 +29,7 @@ class EmailFormatter
 #{GitInfo.shortstat}
 
 # Referenced issues
-#{GitInfo.redmine_urls}
+#{GitInfo.issue_urls}
 BODY
   end
 end

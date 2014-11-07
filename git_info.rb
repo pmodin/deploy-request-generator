@@ -30,15 +30,15 @@ module GitInfo
       `git diff --shortstat origin/master...`.strip
     end
 
-    def redmine_urls
-      redmine_refs.map do |ref|
+    def issue_urls
+      issue_refs.map do |ref|
         "https://issue.tracker.com/issues/#{ref}"
       end.join("\n")
     end
 
     private
 
-    def redmine_refs
+    def issue_refs
       merge_base = `git merge-base HEAD master`.chomp
       `git log #{merge_base}..HEAD --format='%b' | grep refs`.
         gsub('refs #', '').chomp.split(/\s+/).uniq.sort_by { |ref| ref.to_i }
