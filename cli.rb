@@ -1,3 +1,4 @@
+require_relative 'settings'
 require_relative 'os'
 require_relative 'git_info'
 require_relative 'email_formatter'

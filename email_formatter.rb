@@ -9,7 +9,7 @@ class EmailFormatter
   attr_reader :special
 
   def to
-    ENV['email_to']
+    Settings.email_to
   end
 
   def subject

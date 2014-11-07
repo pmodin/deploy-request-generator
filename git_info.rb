@@ -32,7 +32,7 @@ module GitInfo
 
     def issue_urls
       issue_refs.map do |ref|
-        "#{ENV['issue_tracker_url']}/#{ref}"
+        "#{Settings.issue_tracker_url}/#{ref}"
       end.join("\n")
     end
 
