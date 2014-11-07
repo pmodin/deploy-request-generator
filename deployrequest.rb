@@ -145,7 +145,6 @@ class CLI
   end
 
   def open
-    command = 'xdg-open'
     mailto_link = "mailto:#{email.to}?subject=#{email.subject}"\
       "&body=#{email.body.gsub(/\n/, '%0D%0A')}"
     `#{command} "#{mailto_link}"`
@@ -155,6 +154,14 @@ class CLI
 
   def email
     @email ||= EmailFormatter.new(special)
+  end
+
+  def command
+    if OS.linux?
+      'xdg-open'
+    else
+      'open'
+    end
   end
 end
 
