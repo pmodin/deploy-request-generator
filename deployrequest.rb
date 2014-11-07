@@ -43,6 +43,23 @@ module GitInfo
   end
 end
 
+# Checks what OS the user is on
+module OS
+  class << self
+    def windows?
+      !!(RUBY_PLATFORM.match(/cygwin|mswin|mingw|bccwin|wince|emx/))
+    end
+
+    def mac?
+      !!(RUBY_PLATFORM.match(/darwin/))
+    end
+
+    def linux?
+      not mac? and not windows?
+    end
+  end
+end
+
 # Contains the various snippets of text generated for the mail
 class EmailFormatter
   def initialize(special)
