@@ -6,7 +6,7 @@ require_relative 'email_formatter'
 # User interface and what opens the mailto link
 class CLI
   def self.run
-    cli = new(Settings.default_allowed, false)
+    cli = new(Settings.default_allowed, Settings.default_special, false)
     cli.check_if_windows
     cli.check_if_in_git_repo
     cli.check_if_in_master
@@ -15,12 +15,13 @@ class CLI
     cli.open_mailto_link
   end
 
-  def initialize(default_allowed, debug)
+  def initialize(default_allowed, default_special, debug)
     @default_allowed = default_allowed
+    @default_special = default_special
     @debug = debug
   end
 
-  attr_reader :default_allowed, :special, :debug
+  attr_reader :default_allowed, :default_special, :special, :debug
 
   def check_if_windows
     if OS.windows?
@@ -50,7 +51,7 @@ class CLI
       answer = $stdin.gets.chomp.upcase
 
       if default_allowed && answer == ''
-        @special = false
+        @special = default_special
         break
       elsif answer == 'Y'
         @special = true
@@ -91,7 +92,11 @@ class CLI
 
   def yes_no_letters
     if default_allowed
-      '[y/N]'
+      if default_special
+        '[Y/n]'
+      else
+        '[y/N]'
+      end
     else
       '[Y/N]'
     end
