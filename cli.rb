@@ -6,7 +6,7 @@ require_relative 'email_formatter'
 # User interface and what opens the mailto link
 class CLI
   def self.run
-    cli = new(true, false)
+    cli = new(Settings.default_allowed, false)
     cli.check_if_windows
     cli.check_if_in_git_repo
     cli.check_if_in_master
@@ -45,8 +45,7 @@ class CLI
   end
 
   def special?
-    print "Does the deployer need any special instructions? "\
-      "[#{default_allowed ? 'y' : 'Y'}/N] "
+    print "Does the deployer need any special instructions? #{yes_no_letters} "
     loop do
       answer = $stdin.gets.chomp.upcase
 
@@ -60,7 +59,7 @@ class CLI
         @special = false
         break
       else
-        print "Please try again... [#{default_allowed ? 'y' : 'Y'}/N] "
+        print "Please try again... #{yes_no_letters} "
       end
     end
   end
@@ -89,6 +88,14 @@ class CLI
   end
 
   private
+
+  def yes_no_letters
+    if default_allowed
+      '[y/N]'
+    else
+      '[Y/N]'
+    end
+  end
 
   def email
     @email ||= EmailFormatter.new(special)
