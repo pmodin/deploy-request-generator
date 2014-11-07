@@ -100,7 +100,7 @@ class CLI
     cli = new(true, false)
     cli.special?
     cli.debug_output
-    cli.open
+    cli.open_mailto_link
   end
 
   def initialize(default_allowed, debug)
@@ -144,7 +144,7 @@ class CLI
     puts email.body
   end
 
-  def open
+  def open_mailto_link
     mailto_link = "mailto:#{email.to}?subject=#{email.subject}"\
       "&body=#{format_newlines(email.body)}"
 
