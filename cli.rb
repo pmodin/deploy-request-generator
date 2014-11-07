@@ -15,13 +15,11 @@ class CLI
   end
 
   def initialize(default_allowed, debug)
-    # TODO: use "default_allowed" to allow user to just press enter on
-    # special-prompt
     @default_allowed = default_allowed
     @debug = debug
   end
 
-  attr_reader :special, :debug
+  attr_reader :default_allowed, :special, :debug
 
   def check_if_windows
     if OS.windows?
@@ -46,18 +44,22 @@ class CLI
   end
 
   def special?
-    print 'Does the deployer need any special instructions? [Y/N] '
+    print "Does the deployer need any special instructions? "\
+      "[#{default_allowed ? 'y' : 'Y'}/N] "
     loop do
-      answer = $stdin.gets.chomp
-      case answer.upcase
-      when 'Y'
+      answer = $stdin.gets.chomp.upcase
+
+      if default_allowed && answer == ''
+        @special = false
+        break
+      elsif answer == 'Y'
         @special = true
         break
-      when 'N'
+      elsif answer == 'N'
         @special = false
         break
       else
-        print 'Please try again... [Y/N] '
+        print "Please try again... [#{default_allowed ? 'y' : 'Y'}/N] "
       end
     end
   end
