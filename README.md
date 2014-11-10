@@ -26,6 +26,18 @@ https://issue.tracker.com/issues/123
 https://issue.tracker.com/issues/958
 ```
 
+## Usage
+
+Clone the repository and then [configure the script](#configuration).
+
+Once the configuration is in place:
+
+1. Change your directory to the project you wish to send a deploy request from.
+2. Change your git branch to the feature branch you wish to send a deploy request mail for.
+3. Run `deployrequest.rb`, wherever you've placed it.
+
+The script should open your preferred email client with the deploy request email.
+
 ### Referenced issues
 
 Do note that the "Referenced issues" feature works on the assumption that you specify what issue a commit references by having dedicated ref-lines (for instance at the end of commits) as follows:
@@ -54,6 +66,7 @@ If it is, the subject of the mail will be changed and the body will include an e
 ## Configuration
 
 The generator needs to be configured with a `settings.yml` file.
+Copy and tweak the existing `settings.yml.sample` to your liking.
 
 Here's a brief explanation of what the different settings do:
 
