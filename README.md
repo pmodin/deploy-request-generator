@@ -65,7 +65,7 @@ If it is, the subject of the mail will be changed and the body will include an e
 
 ## Configuration
 
-The generator needs to be configured with a `settings.yml` file.
+The generator needs to be configured with a `settings.yml` file, which has to be placed at the root of the repository.
 Copy and tweak the existing `settings.yml.sample` to your liking.
 
 Here's a brief explanation of what the different settings do:
