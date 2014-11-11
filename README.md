@@ -34,7 +34,7 @@ Once the configuration is in place:
 
 1. Change your directory to the project you wish to send a deploy request from.
 2. Change your git branch to the feature branch you wish to send a deploy request mail for.
-3. Run `deployrequest.rb`, wherever you've placed it.
+3. Run `deployrequest`, wherever you've placed it.
 
 The script should open your preferred email client with the deploy request email.
 
