@@ -1,3 +1,4 @@
+require 'uri'
 require_relative 'settings'
 require_relative 'os'
 require_relative 'git_info'
@@ -83,7 +84,7 @@ class CLI
   def open_mailto_link
     mailto_link = "mailto:#{email.to}?"\
       "subject=#{email.subject}"\
-      "&body=#{format_newlines(email.body)}"
+      "&body=#{URI.escape(email.body)}"
 
     `#{command} "#{mailto_link}"`
   end
@@ -104,14 +105,6 @@ class CLI
 
   def email
     @email ||= EmailFormatter.new(special)
-  end
-
-  def format_newlines(body)
-    if OS.linux?
-      body.gsub(/\n/, '%0D%0A')
-    else
-      body
-    end
   end
 
   def command
