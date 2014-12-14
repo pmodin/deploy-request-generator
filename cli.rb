@@ -26,22 +26,22 @@ class CLI
 
   def check_if_windows
     if OS.windows?
-      puts 'Script does not support Windows.'
+      $stderr.puts 'Script does not support Windows.'
       exit 1
     end
   end
 
   def check_if_in_git_repo
     unless GitInfo.currently_in_git_repo?
-      puts "Not in a git repository."
+      $stderr.puts 'Not in a git repository.'
       exit 1
     end
   end
 
   def check_if_in_master
     if GitInfo.master?
-      puts "You're currently in the 'master' branch."
-      puts "You can't make a deploy request for this branch."
+      $stderr.puts "You're currently in the 'master' branch."
+      $stderr.puts "You can't make a deploy request for this branch."
       exit 1
     end
   end
@@ -69,16 +69,20 @@ class CLI
   def debug_output
     return unless debug
 
-    puts 'TO:'
-    puts '---'
-    puts email.to
-    puts 'SUBJECT:'
-    puts '--------'
-    puts email.subject
-    puts
-    puts 'BODY:'
-    puts '-----'
-    puts email.body
+    $stdout.puts(<<-OUTPUT.gsub(/^ +/, '')
+      TO:
+      ---
+      #{email.to}
+
+      SUBJECT:
+      --------
+      #{email.subject}
+
+      BODY:
+      -----
+      #{email.body}
+      OUTPUT
+    )
   end
 
   def open_mailto_link

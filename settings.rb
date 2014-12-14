@@ -9,8 +9,8 @@ module Settings
       define_method(key) { value }
     end
   rescue Errno::ENOENT
-    puts "'settings.yml' file not found."
-    puts "Copy and modify the 'settings.yml.sample' file."
+    $stderr.puts "'settings.yml' file not found."
+    $stderr.puts "Copy and modify the 'settings.yml.sample' file."
     exit 1
   end
 end
