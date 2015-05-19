@@ -47,23 +47,10 @@ class CLI
   end
 
   def special?
-    print "Does the deployer need any special instructions? #{yes_no_letters} "
-    loop do
-      answer = $stdin.gets.chomp.upcase
-
-      if default_allowed && answer == ''
-        @special = default_special
-        break
-      elsif answer == 'Y'
-        @special = true
-        break
-      elsif answer == 'N'
-        @special = false
-        break
-      else
-        print "Please try again... #{yes_no_letters} "
-      end
-    end
+    @special = yes_no_prompt(
+      'Does the deployer need any special instructions?',
+      default_special
+    )
   end
 
   def debug_output
@@ -95,9 +82,26 @@ class CLI
 
   private
 
-  def yes_no_letters
+  def yes_no_prompt(question, default_value)
+    print "#{question} #{yes_no_letters(default_value)} "
+    loop do
+      answer = $stdin.gets.chomp.upcase
+
+      if default_allowed && answer == ''
+        return default_value
+      elsif answer == 'Y'
+        return true
+      elsif answer == 'N'
+        return false
+      else
+        print "Please try again... #{yes_no_letters(default_value)} "
+      end
+    end
+  end
+
+  def yes_no_letters(default)
     if default_allowed
-      if default_special
+      if default
         '[Y/n]'
       else
         '[y/N]'
