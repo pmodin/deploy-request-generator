@@ -11,7 +11,6 @@ class CLI
     cli.check_if_windows
     cli.check_if_in_git_repo
     cli.check_if_in_master
-    cli.special?
     cli.debug_output
     cli.open_mailto_link
   end
@@ -22,7 +21,7 @@ class CLI
     @debug = debug
   end
 
-  attr_reader :default_allowed, :default_special, :special, :debug
+  attr_reader :default_allowed, :default_special, :debug
 
   def check_if_windows
     if OS.windows?
@@ -44,13 +43,6 @@ class CLI
       $stderr.puts "You can't make a deploy request for this branch."
       exit 1
     end
-  end
-
-  def special?
-    @special = yes_no_prompt(
-      'Does the deployer need any special instructions?',
-      default_special
-    )
   end
 
   def debug_output
@@ -82,6 +74,13 @@ class CLI
 
   private
 
+  def special?
+    yes_no_prompt(
+      'Does the deployer need any special instructions?',
+      default_special
+    )
+  end
+
   def yes_no_prompt(question, default_value)
     print "#{question} #{yes_no_letters(default_value)} "
     loop do
@@ -112,7 +111,7 @@ class CLI
   end
 
   def email
-    @email ||= EmailFormatter.new(special)
+    @email ||= EmailFormatter.new(special?)
   end
 
   def command
