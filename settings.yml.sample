@@ -2,3 +2,4 @@ email_to: 'Deploy officer <deploy@example.com>'
 issue_tracker_url: 'https://issue.tracker.com/issues'
 default_allowed: true
 default_special: false
+default_target_branch_is_master: true

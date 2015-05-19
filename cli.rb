@@ -7,7 +7,12 @@ require_relative 'email_formatter'
 # User interface and what opens the mailto link
 class CLI
   def self.run
-    cli = new(Settings.default_allowed, Settings.default_special, false)
+    cli = new(
+      Settings.default_allowed,
+      Settings.default_special,
+      Settings.default_target_branch_is_master,
+      false
+    )
     cli.check_if_windows
     cli.check_if_in_git_repo
     cli.check_if_in_master
@@ -15,13 +20,20 @@ class CLI
     cli.open_mailto_link
   end
 
-  def initialize(default_allowed, default_special, debug)
+  def initialize(
+    default_allowed,
+    default_special,
+    default_target_branch_is_master,
+    debug
+  )
     @default_allowed = default_allowed
     @default_special = default_special
+    @default_target_branch_is_master = default_target_branch_is_master
     @debug = debug
   end
 
-  attr_reader :default_allowed, :default_special, :debug
+  attr_reader :default_allowed, :default_special,
+    :default_target_branch_is_master, :debug
 
   def check_if_windows
     if OS.windows?
@@ -81,6 +93,13 @@ class CLI
     )
   end
 
+  def target_branch_is_master?
+    yes_no_prompt(
+      "Is 'master' the target branch?",
+      default_target_branch_is_master
+    )
+  end
+
   def yes_no_prompt(question, default_value)
     print "#{question} #{yes_no_letters(default_value)} "
     loop do
@@ -111,7 +130,7 @@ class CLI
   end
 
   def email
-    @email ||= EmailFormatter.new(special?)
+    @email ||= EmailFormatter.new(special?, target_branch_is_master?)
   end
 
   def command
