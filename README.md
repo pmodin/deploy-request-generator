@@ -72,5 +72,6 @@ Here's a brief explanation of what the different settings do:
 
 * `email_to` - What address will the deploy request be sent to.
 * `issue_tracker_url` - The URL of the issue tracker.
-* `default_allowed` - Whether the user should be allowed to just press Enter when choosing whether a deploy request is special or not.
-* `default_special` - If above option is set to `true`, this determines what the default choice should be.
+* `default_allowed` - Whether the user should be allowed to just press Enter when `Y/N` choices are presented.
+* `default_special` - If `default_allowed` is set to `true`: is this a special deploy request or not?
+* `default_target_branch_is_master` - If `default_allowed` is set to `true`: is the target branch to merge into `master`?
