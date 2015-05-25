@@ -1,4 +1,5 @@
 require_relative 'git_info'
+require 'uri'
 
 # Contains the various snippets of text generated for the mail
 class EmailFormatter
@@ -19,7 +20,7 @@ class EmailFormatter
   end
 
   def body
-    <<BODY
+    body_raw = <<BODY
 # Branch
 #{GitInfo.branch_name}
 #{!target_branch_is_master ? "\n# Target branch\n" : ''}
@@ -33,5 +34,9 @@ class EmailFormatter
 # Referenced issues
 #{GitInfo.issue_urls}
 BODY
+
+    return body_raw if OS.mac?
+
+    URI.escape(body_raw)
   end
 end

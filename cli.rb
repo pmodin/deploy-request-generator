@@ -1,4 +1,3 @@
-require 'uri'
 require_relative 'settings'
 require_relative 'os'
 require_relative 'git_info'
@@ -79,7 +78,7 @@ class CLI
   def open_mailto_link
     mailto_link = "mailto:#{email.to}?"\
       "subject=#{email.subject}"\
-      "&body=#{URI.escape(email.body)}"
+      "&body=#{email.body}"
 
     `#{command} "#{mailto_link}"`
   end
